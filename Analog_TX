@@ -1,0 +1,23 @@
+// const int A0 = 0;
+const int D3 = 3;
+
+String output_buf;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(2400);
+  pinMode(3, OUTPUT);
+  pinMode(A0, INPUT);
+
+}
+
+int cycle = 0;
+
+int int = 3;
+void loop() {
+  // Serial.println(analogRead(A0));
+  // 00000101
+  // int a = Serial.parseInt();
+  analogWrite(3, 255/i);
+
+}
