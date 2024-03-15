@@ -1,0 +1,59 @@
+int digital_val;
+int prev;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(2000000);
+  pinMode(4, INPUT);
+}
+
+int zeros = 0;
+int ones = 0;
+
+void loop() {
+  // put your main code here, to run repeatedly
+  int val = digitalRead(4);
+  // Serial.println(val);
+
+  /*
+  THE LOGIC
+  If ratio is 
+  1 : Start & Stop
+  0.95 : comma
+  0.9 : 9
+  0.8 : 8
+  0.7 : 7
+  0.6 : 6
+  0.5 : 5
+  0.4 : 4
+  0.3 : 3
+  0.2 : 2
+  0.1 : 1
+  0   : 0
+  */
+
+  if (val != prev){      // if val changes values, print the number of zeros and ones that printed
+    if(prev){
+      Serial.print("ones: ");
+      Serial.println(ones);      
+    }
+    else{
+      Serial.print("zeros: ");
+      Serial.println(zeros);    
+      //int your_int = (int) ((float)ones/(ones+zeros)*10 + 0.5);    // Decrypts the ratio to the integer
+      int your_int = (zeros - ones)/ones;
+      Serial.print("Your integer: ");
+      Serial.println(your_int);
+      ones = 0;
+      zeros = 1;  
+    }
+  }
+
+  if(val){
+    ones++;
+  } else {
+    zeros++;
+  }
+
+  prev = val;
+}
