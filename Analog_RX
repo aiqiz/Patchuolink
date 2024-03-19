@@ -46,16 +46,12 @@ void loop() {
       //int your_int = (int) ((float)ones/(ones+zeros)*10 + 0.5);    // Decrypts the ratio to the integer
       ratio = ones*100/(ones+zeros);
 
-      Serial.print(val);
-      Serial.print(",");
       Serial.print(ones);      
       Serial.print(",");
       Serial.print(zeros);  
       Serial.print(",");
       Serial.println(ratio);
 
-      //Serial.print(",");
-      //Serial.println(ratio);
       ones = 0;
       zeros = 1;  
     }
