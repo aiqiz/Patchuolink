@@ -1,5 +1,7 @@
 int digital_val;
 int prev;
+int ratio;
+int val;
 
 void setup() {
   // put your setup code here, to run once:
@@ -12,9 +14,11 @@ int ones = 0;
 
 void loop() {
   // put your main code here, to run repeatedly
-  int val = digitalRead(4);
-  // Serial.println(val);
+  val = digitalRead(4);
+  //Serial.println(val);
 
+  //Serial.print(val);      
+  //Serial.print(",");
   /*
   THE LOGIC
   If ratio is 
@@ -34,20 +38,29 @@ void loop() {
 
   if (val != prev){      // if val changes values, print the number of zeros and ones that printed
     if(prev){
-      Serial.print("ones: ");
-      Serial.println(ones);      
+      //Serial.print(ones);      
+      //Serial.print(",");
     }
     else{
-      Serial.print("zeros: ");
-      Serial.println(zeros);    
+      //Serial.print(zeros);    
       //int your_int = (int) ((float)ones/(ones+zeros)*10 + 0.5);    // Decrypts the ratio to the integer
-      int your_int = (zeros - ones)/ones;
-      Serial.print("Your integer: ");
-      Serial.println(your_int);
+      ratio = ones*100/(ones+zeros);
+
+      Serial.print(val);
+      Serial.print(",");
+      Serial.print(ones);      
+      Serial.print(",");
+      Serial.print(zeros);  
+      Serial.print(",");
+      Serial.println(ratio);
+
+      //Serial.print(",");
+      //Serial.println(ratio);
       ones = 0;
       zeros = 1;  
     }
   }
+
 
   if(val){
     ones++;
