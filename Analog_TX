@@ -13,11 +13,12 @@ void setup() {
 
 int cycle = 0;
 
-int int = 3;
+float i = 255 * 12/17;
 void loop() {
-  // Serial.println(analogRead(A0));
+  Serial.println(analogRead(A0));
   // 00000101
   // int a = Serial.parseInt();
-  analogWrite(3, 255/i);
+  analogWrite(3, i);
+
 
 }
