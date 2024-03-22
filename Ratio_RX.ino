@@ -100,20 +100,30 @@ int8_t ratio_to_bool(int ratio){
 
 
 void loop() {
+  
   noInterrupts();
   if(ratio_ready){
+    int ratio_cpy = ratio;
+    ratio_ready = false;
+    interrupts();
+
+    Serial.print("Scale_lower:");
     Serial.print(0);
     Serial.print(",");
+    Serial.print("Scale_higher:");
     Serial.print(60);
     Serial.print(",");
+    Serial.print("Num_ones:");
     Serial.print(update_ones);
     Serial.print(",");
+    Serial.print("Num_zeros:");
     Serial.print(update_zeros);
     Serial.print(",");
-    Serial.print(ratio);
+    Serial.print("Ratio_Raw:");
+    Serial.print(ratio_cpy);
     Serial.print(",");
-    Serial.println(ratio_to_bool(ratio) * 30);
-    ratio_ready = false;
+    Serial.print("Ratio_Digital:");
+    Serial.println(ratio_to_bool(ratio_cpy) * 30);
   }
   interrupts();
 }
