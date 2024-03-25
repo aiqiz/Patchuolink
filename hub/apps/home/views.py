@@ -35,20 +35,38 @@ def pages(request):
             return HttpResponseRedirect(reverse('admin:index'))
         
         
-        if load_template == "each_update_full.html":
+        elif load_template == "each_update_full.html":
             all_data = HistoryUpdate.objects.all
             context['all_data'] = all_data
             html_template = loader.get_template('data_query/' + load_template)
             return HttpResponse(html_template.render(context, request))
 
         
-        if load_template == "node_information.html":
+        elif load_template == "node_information.html":
             all_data = NodeInfo.objects.all
             context['all_data'] = all_data
             html_template = loader.get_template('data_query/' + load_template)
             return HttpResponse(html_template.render(context, request))
         
-        if load_template == "dashboard.html":
+        elif load_template == "node_1.html":
+            all_data = HistoryUpdate.objects.filter(node_id=1)
+            context['all_data'] = all_data
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+        
+        elif load_template == "node_2.html":
+            all_data = HistoryUpdate.objects.filter(node_id=2)
+            context['all_data'] = all_data
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+        
+        elif load_template == "node_3.html":
+            all_data = HistoryUpdate.objects.filter(node_id=3)
+            context['all_data'] = all_data
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+
+        elif load_template == "dashboard.html":
             print("yes")
             hu = HistoryUpdate.objects.all
             ni = NodeInfo.objects.all

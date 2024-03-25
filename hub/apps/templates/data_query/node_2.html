@@ -1,0 +1,81 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Node Information {% endblock title %}
+
+{% block content %}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Node 2</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="dashboard.html"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="map.html">Map</a></li>
+                <li class="breadcrumb-item"><a href="node_2.html">Node 2</a></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+            <a href="node_1.html" class="btn btn-sm btn-neutral">Node 1</a>
+            <a href="node_2.html" class="btn btn-sm btn-neutral">Node 2</a>
+            <a href="node_3.html" class="btn btn-sm btn-neutral">Node 3</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col">
+        <div class="card-header border-0">
+            <h3 class="mb-0">Node Information</h3>
+          </div>
+          <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+                <th scope="col" class="sort">update_time</th>
+                <th scope="col" class="sort">node_id</th>
+                <th scope="col" class="sort">soil_temp_0</th>
+                <th scope="col" class="sort">soil_temp_10</th>
+                <th scope="col" class="sort">soil_temp_20</th>
+                <th scope="col" class="sort">soil_moisture_0</th>
+                <th scope="col" class="sort">soil_moisture_10</th>
+                <th scope="col" class="sort">soil_moisture_20</th>
+                <th scope="col" class="sort">ph_0</th>
+                <th scope="col" class="sort">ph_10</th>
+                <th scope="col" class="sort">ph_20</th>
+                <th scope="col" class="sort">light_intensity_0</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for d in all_data%}
+              <tr>
+                  <td>{{d.update_time}}</td> 
+                  <td>{{d.node_id}}</td>
+                  <td>{{d.soil_temp_0}}</td> 
+                  <td>{{d.soil_temp_10}}</td>
+                  <td>{{d.soil_temp_20}}</td> 
+                  <td>{{d.soil_moisture_0}}</td>
+                  <td>{{d.soil_moisture_10}}</td> 
+                  <td>{{d.soil_moisture_20}}</td>
+                  <td>{{d.ph_0}}</td> 
+                  <td>{{d.ph_10}}</td>
+                  <td>{{d.ph_20}}</td>
+                  <td>{{d.light_intensity_0}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

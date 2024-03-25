@@ -10,15 +10,15 @@
               <h6 class="h2 text-white d-inline-block mb-0">Google maps</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Maps</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Google maps</li>
+                  <li class="breadcrumb-item"><a href="dashboard.html"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="map.html">Maps</a></li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <a href="node_1.html" class="btn btn-sm btn-neutral">Node 1</a>
+              <a href="node_2.html" class="btn btn-sm btn-neutral">Node 2</a>
+              <a href="node_3.html" class="btn btn-sm btn-neutral">Node 3</a>
             </div>
           </div>
         </div>
@@ -29,7 +29,6 @@
       <div class="row">
         <div class="col">
           <div class="card border-0">
-            <div id="map-default" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
             <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1uVJ-V4pOWXZG3gTVn6ngo70lTV-s2yg&ehbc=2E312F" width="1170" height="640"></iframe>
           </div>
         </div>
@@ -39,6 +38,8 @@
     </div>
 {% endblock content %}
 <!-- Specific JS goes HERE --> 
+<!--<div id="map-default" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>-->
+
 {% block javascripts %}
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
