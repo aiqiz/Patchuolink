@@ -14,10 +14,23 @@ import json
 
 
 @login_required(login_url="/login/")
-def index(request):
-    context = {'segment': 'index'}
+def dashboard(request):
+    context = {'segment': 'dashboard'}
+    hu = HistoryUpdate.objects.all
+    ni = NodeInfo.objects.all
+    context['HistoryUpdateAll'] = hu
+    context['NodeInfoAll'] = ni
+    
+    c1x = HistoryUpdate.objects.values_list('soil_temp_0')
+    c1y = HistoryUpdate.objects.values_list('update_time')
+    chart_data1 = {
+        'x': c1x,
+        'y': c1y,
+    }
+    print(chart_data1)
+    context["chart_data1"] = chart_data1
 
-    html_template = loader.get_template('home/index.html')
+    html_template = loader.get_template('home/dashboard.html')
     return HttpResponse(html_template.render(context, request))
 
 
@@ -31,9 +44,8 @@ def pages(request):
         context['segment'] = load_template
         print(load_template)
         
-        if load_template == 'admin':
-            return HttpResponseRedirect(reverse('admin:index'))
-        
+        if load_template == 'dashboard.html':
+            dashboard(request)
         
         elif load_template == "each_update_full.html":
             all_data = HistoryUpdate.objects.all
@@ -64,27 +76,6 @@ def pages(request):
             all_data = HistoryUpdate.objects.filter(node_id=3)
             context['all_data'] = all_data
             html_template = loader.get_template('data_query/' + load_template)
-            return HttpResponse(html_template.render(context, request))
-
-        elif load_template == "dashboard.html":
-            print("yes")
-            hu = HistoryUpdate.objects.all
-            ni = NodeInfo.objects.all
-            context['HistoryUpdateAll'] = hu
-            context['NodeInfoAll'] = ni
-            
-            c1 = HistoryUpdate.objects.all().values_list('soil_temp_0', 'update_time').order_by('id')
-            c1x = c1
-            c1y = c1[1][1]
-            chart_data1 = {
-                'x': c1x,
-                'y': c1y,
-            }
-            print(c1x)
-            print(c1y)
-            context["chart_data1"] = chart_data1
-
-            html_template = loader.get_template('home/' + load_template)
             return HttpResponse(html_template.render(context, request))
         
 
