@@ -1,9 +1,6 @@
 {% extends 'layouts/base.html' %}
-
 {% block title %} Maps {% endblock title %}
-
 {% block content %}
-
     <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
@@ -33,19 +30,19 @@
         <div class="col">
           <div class="card border-0">
             <div id="map-default" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1uVJ-V4pOWXZG3gTVn6ngo70lTV-s2yg&ehbc=2E312F" width="1170" height="640"></iframe>
           </div>
         </div>
       </div>
-
       {% include "includes/footer.html" %}
       
     </div>
-
 {% endblock content %}
-
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2CBpdKoYzRoR6KyQnMNz1bjV-vTIg8YI"></script>-->
+
 
 {% endblock javascripts %}
