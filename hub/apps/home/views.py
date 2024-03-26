@@ -16,20 +16,23 @@ import json
 @login_required(login_url="/login/")
 def dashboard(request):
     context = {'segment': 'dashboard'}
-    hu = HistoryUpdate.objects.all
-    ni = NodeInfo.objects.all
-    context['HistoryUpdateAll'] = hu
-    context['NodeInfoAll'] = ni
-    
-    c1x = HistoryUpdate.objects.values_list('soil_temp_0')
-    c1y = HistoryUpdate.objects.values_list('update_time')
-    chart_data1 = {
-        'x': c1x,
-        'y': c1y,
-    }
-    print(chart_data1)
-    context["chart_data1"] = chart_data1
+    hu = HistoryUpdate.objects.filter().order_by('-id')[:6]
+    hu = reversed(hu)
+    ni = NodeInfo.objects.all()
+    context['hu'] = hu
+    context['ni'] = ni
+    print(hu, ni)
 
+    
+    c1x = list(HistoryUpdate.objects.values_list('soil_temp_0', flat=True))
+    c1y = list(HistoryUpdate.objects.values_list('update_time', flat=True))
+    
+    chart_data1 = json.dumps({
+        'values': c1x,
+        'labels': [str(y) for y in c1y],  # Convert datetime or any objects to string if necessary
+    })
+    
+    context["c1"] = chart_data1
     html_template = loader.get_template('home/dashboard.html')
     return HttpResponse(html_template.render(context, request))
 
@@ -45,7 +48,25 @@ def pages(request):
         print(load_template)
         
         if load_template == 'dashboard.html':
-            dashboard(request)
+            context = {'segment': 'dashboard'}
+            hu = HistoryUpdate.objects.filter().order_by('-id')[:6]
+            hu = reversed(hu)
+            ni = NodeInfo.objects.all()
+            context['hu'] = hu
+            context['ni'] = ni
+            
+            c1x = list(HistoryUpdate.objects.values_list('soil_temp_0', flat=True))
+            c1y = list(HistoryUpdate.objects.values_list('update_time', flat=True))
+            
+            chart_data1 = json.dumps({
+                'values': c1x,
+                'labels': [str(y) for y in c1y],  # Convert datetime or any objects to string if necessary
+            })
+            print(c1x, c1y)
+
+            context["c1"] = chart_data1
+            html_template = loader.get_template('home/dashboard.html')
+            return HttpResponse(html_template.render(context, request))
         
         elif load_template == "each_update_full.html":
             all_data = HistoryUpdate.objects.all
