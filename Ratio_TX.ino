@@ -13,8 +13,9 @@ enum ANALOG{
 #define RX_PIN 4
 #define TX_PIN 3
 
+#define TEST_PATTERN 0x2614D134438F47DE
+
 #define TX_FREQ 100
-#define RX_FREQ (TX_FREQ * 10)
 
 #define LED_PIN 13
 #define RX_ENABLE false
@@ -51,8 +52,15 @@ uint8_t tx_index =            0;
 ANALOG prev_write_val =       OFF;
 uint8_t send_bit =            0;
 
+// #define CALIBRATION 1
+#define CAL_MODE HIGH_UP
 
 void TX_Handler(){
+  #ifdef CALIBRATION
+
+  analogWrite(TX_PIN, CAL_MODE);
+
+  #else
 
   if(tx_mode){
     if(!prev_tx_mode) {
@@ -75,6 +83,7 @@ void TX_Handler(){
   }
 
   prev_tx_mode = tx_mode;
+  #endif
 }
 
 
@@ -100,13 +109,23 @@ void setup() {
   }
 }
 
+typedef struct command_format{
+  uint8_t start_of_packet; // 4 bits
+  uint8_t source;
+  uint8_t control;
+  uint32_t data;
+  uint8_t error_check;
+  uint8_t end_of_packet;  // 4 bits
+} command_format;
+
 void loop() {
   noInterrupts();
   uint32_t tx_buf = tx_buffer;
   if(!tx_mode) {
-    tx_buffer = 0xFFFF0000FFFF0000;
+    tx_buffer = TEST_PATTERN;
     tx_mode = 1;
   }
   Serial.println(prev_write_val);
   interrupts();
+  
 }
