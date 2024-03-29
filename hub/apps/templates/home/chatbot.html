@@ -29,31 +29,24 @@
       <div class="container-fluid mt--6">
         <div class="row">
           <div class="col">
-            <div class="card-header border-0">
-                <h3 class="mb-0">General Table</h3>
+            <div class="p-6 w-[800px]">
+              <h1 class="text-3xl tracking-tight font-light" id="chat-header"></h1>
+              <div id="chat-log" class="mt-4 w-full relative p-6 overflow-y-auto h-[30rem] bg-gray-50 border border-gray-200"></div>
+              <div class="mt-4">
+                <input
+                  id="chat-message-input"
+                  class="py-2 outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:border-blue-500"
+                  type="text"
+                  placeholder="Write your message here."/>
+                <button
+                  id="chat-message-submit"
+                  class="py-2 px-4 ml-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900"
+                  type="submit">
+                  Send
+                </button>
               </div>
-              <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" class="sort">node_id</th>
-                  <th scope="col" class="sort">lat_coord</th>
-                  <th scope="col" class="sort">long_coord</th>
-                  <th scope="col" class="sort">time_initialized</th>
-                  <th scope="col" class="sort">last_update_time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for d in all_data%}
-                <tr>
-                  <td>{{d.node_id}}</td> 
-                  <td>{{d.lat_coord}}</td> 
-                  <td>{{d.long_coord}}</td> 
-                  <td>{{d.time_initialized}}</td> 
-                  <td>{{d.last_update_time}}</td> 
-                </tr>
-                {% endfor %}
-              </tbody>
+            </div>
+            {% endblock %}
         </div>
       </div>
     </div>  

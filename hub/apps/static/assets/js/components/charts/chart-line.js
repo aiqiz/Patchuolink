@@ -4,32 +4,48 @@
 // Sales chart
 //
 
-var Chart1 = (function() {
+var Chart = (function() {
+  console.log("hello")
+  // Variables
 
-  var $chart1 = $('#chart-dark');
+  var $chart = $('#chart-dark');
 
-  function init($chart1, labels, data) {
-    var chartData1 = JSON.parse('{{ c1 | safe }}');
-    console.log(chartData1);
-    var ctx = document.getElementById('chart-dark').getContext('2d');
-    var chart1 = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartData1.labels,
-            datasets: [{
-                label: 'Surface Temperature',
-                data: chartData1.values
-            }]
-        }
+  function init($chart) {
+    
+    var output_chart = new Chart($chart, {
+      type: 'line',
+      options: {
+        scales: {
+          yAxes: [{
+            gridLines: {
+              lineWidth: 1,
+              color: Chart.colors.gray[900],
+              zeroLineColor: Chart.colors.gray[900]
+            },
+            ticks: {
+              callback: function(value) {
+                if (!(value % 10)) {
+                  return '$' + value + 'k';
+                }
+              }
+            }
+          }]
+        }},
+      data: {
+        labels: JSON.parse('{{ c1 | safe }}').labels,
+        datasets: [{
+          label: 'Surface Temperature',
+          data: JSON.parse('{{ c1 | safe }}').values
+        }]
+      }
     });
-}
+    $chart.data('chart', output_chart);
+  };
 
-  
-  $('#chart-dark').data('chart', chart1);
-  // Events
 
-  if ($chart1.length) {
-    init($chart1);
+
+  if ($chart.length) {
+    init($chart);
   }
 
 })();

@@ -34,7 +34,6 @@ class NodeInfo(models.Model):
     lat_coord = models.FloatField(blank=True, null=True)
     long_coord = models.FloatField(blank=True, null=True)
     time_initialized = models.TimeField(blank=True, null=True)
-    last_update_time = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False

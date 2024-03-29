@@ -125,7 +125,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-light text-uppercase ls-1 mb-1">Overview Among All Nodes</h6>
-                  <h5 class="h3 text-white mb-0">Average Temperature</h5>
+                  <h5 class="h3 text-white mb-0">Average Light Intensity</h5>
                 </div>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
@@ -149,25 +149,12 @@
                   var ctx = $('#chart-dark').get(0).getContext('2d');
                   var myChart = new Chart(ctx, {
                         type: 'line',
-                        
                         data: {
                           labels: JSON.parse('{{ c1 | safe }}').labels,
                           datasets: [{
                               label: 'ground',
                               data: JSON.parse('{{ c1 | safe }}').value1,
                               borderColor: 'rgb(17, 205, 239)',
-                              tension: 0.3
-                          },
-                          {
-                              label: '-10cm',
-                              data: JSON.parse('{{ c1 | safe }}').value2,
-                              borderColor: 'rgb(243, 164, 181)',
-                              tension: 0.3
-                          },
-                          {
-                              label: '-20cm',
-                              data: JSON.parse('{{ c1 | safe }}').value3,
-                              borderColor: 'rgb(251, 99, 64)',
                               tension: 0.3
                           }]},
                           options: {
