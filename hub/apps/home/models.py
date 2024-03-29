@@ -6,8 +6,9 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth import get_user_model
 
-
+User = get_user_model()
 
 class HistoryUpdate(models.Model):
     id = models.IntegerField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -38,3 +39,10 @@ class NodeInfo(models.Model):
     class Meta:
         managed = False
         db_table = 'node_info'
+
+class ChatGptBot(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    messageInput = models.TextField()
+    bot_response = models.TextField()
+    def __str__(self):
+        return self.user.username

@@ -4,52 +4,76 @@
 
 {% block content %}
 
-    <div class="header bg-primary pb-6">
-        <div class="container-fluid">
-          <div class="header-body">
-            <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Raw_data</h6>
-                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                  <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                    <li class="breadcrumb-item"><a href=""><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item"><a href="rawdata.html">Rawdata</a></li>
-                  </ol>
-                </nav>
-              </div>
-              <div class="col-lg-6 col-5 text-right">
-                <a href="node_information.html" class="btn btn-sm btn-neutral">Node Info</a>
-                <a href="each_update_full.html" class="btn btn-sm btn-neutral">Update History</a>
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <div class="card-body">
+                  <div class="container">
+                    {% if not get_history %}
+                    <h1 class="text-center">Hi {{request.user.username}} 👋, I'm Patchuoli-bot🤖</h1>
+                    {% endif %}
+                    <ol class="list-group mt-5">
+                        {% for history in get_history %}
+                        <li class="list-group-item rounded d-flex justify-content-between align-items-start p-2 mb-3" style="background-color: white; color:#303030">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">You ({{history.user.username}}) </div>
+                                {{history.messageInput}}
+                            </div>
+                        </li>
+                        <li class="list-group-item rounded d-flex justify-content-between align-items-start p-2 mb-3" style="background-color: #6E00FF;color:white">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">AI bot </div>
+                                {{history.bot_response}}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    <form action="" method="post" class="mt-3">
+                        {% csrf_token %}
+                        <label for="exampleFormControlTextarea1" class="form-label">Enter your prompt</label>
+                        <div class="d-flex mb-3 gap-2">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="How can i help you?"
+                                name="userInput"></textarea>
+                            <button class="btn btn-dark btn-lg" type="submit" id="btn" style="width: 80px;"><i
+                                    class="bi bi-send-fill"></i></button>
+                        </div>
+                        <div class="d-flex justify-content-center m-3 align-items-center gap-3">
+                            {% if get_history %}
+                            <a href="{% url 'deleteChat'  %}" class="btn btn-warning">Delete Chat <i class="bi bi-x-square"></i></a>
+                            {% endif %}
+                        </div>
+                
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
-
-      <div class="container-fluid mt--6">
-        <div class="row">
-          <div class="col">
-            <div class="p-6 w-[800px]">
-              <h1 class="text-3xl tracking-tight font-light" id="chat-header"></h1>
-              <div id="chat-log" class="mt-4 w-full relative p-6 overflow-y-auto h-[30rem] bg-gray-50 border border-gray-200"></div>
-              <div class="mt-4">
-                <input
-                  id="chat-message-input"
-                  class="py-2 outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:border-blue-500"
-                  type="text"
-                  placeholder="Write your message here."/>
-                <button
-                  id="chat-message-submit"
-                  class="py-2 px-4 ml-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900"
-                  type="submit">
-                  Send
-                </button>
-              </div>
-            </div>
-            {% endblock %}
-        </div>
-      </div>
-    </div>  
+      {% include "includes/footer.html" %}
+    </div>
+    
+    
     
 
 
@@ -58,19 +82,3 @@
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}{% endblock javascripts %}
-
-<!--
-  <th scope = "row"> {{ d.id }} </th>
-              <td>{{d.update_time}}</td> 
-              <td>{{d.node}}</td>
-              <td>{{d.soil_temp_0}}</td> 
-              <td>{{d.soil_temp_10}}</td>
-              <td>{{d.soil_temp_20}}</td> 
-              <td>{{d.soil_moisture_0}}</td>
-              <td>{{d.soil_moisture_10}}</td> 
-              <td>{{d.soil_moisture_20}}</td>
-              <td>{{d.ph_0}}</td> 
-              <td>{{d.ph_10}}</td>
-              <td>{{d.ph_20}}</td>
-              <td>{{d.light_intensity_0}}</td>
--->

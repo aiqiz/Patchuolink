@@ -3,14 +3,24 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+from django.shortcuts import render, redirect
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from .models import HistoryUpdate, NodeInfo
+from .models import HistoryUpdate, NodeInfo, ChatGptBot
 import json
+import os
+from openai import OpenAI
+import openai
+import os
+from openai import OpenAI
 
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=""
+)
 
 def get_graph_data(val_list_x1, val_list_x2, val_list_x3, val_list_y):
     dic = json.dumps({
@@ -244,15 +254,96 @@ def pages(request):
         
         elif load_template == "node1analysis-temp.html":
             node1 = HistoryUpdate.objects.filter(node_id=1)
-            date = list(node1.objects.values_list('update_time', flat=True))
-            temp0 = list(node1.objects.values_list('soil_temp_0', flat=True))
+            update_time = list(node1.values_list('update_time', flat=True))
+            update_time = [str(y.month)+'-'+str(y.day)+' '+str(y.hour)+":00" for y in update_time]
+            
+            soil_temp_0 = list(node1.values_list('soil_temp_0', flat=True))
+            soil_temp_10 = list(node1.values_list('soil_temp_10', flat=True))
+            soil_temp_20 = list(node1.values_list('soil_temp_20', flat=True))
+            context["c1"] = get_graph_data(soil_temp_0, soil_temp_10, soil_temp_20, update_time)
+            
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+        
+        elif load_template == "node1analysis-m.html":
+            node1 = HistoryUpdate.objects.filter(node_id=1)
+            update_time = list(node1.values_list('update_time', flat=True))
+            update_time = [str(y.month)+'-'+str(y.day)+' '+str(y.hour)+":00" for y in update_time]
+        
+            soil_m_0 = list(node1.values_list('soil_moisture_0', flat=True))
+            soil_m_10 = list(node1.values_list('soil_moisture_10', flat=True))
+            soil_m_20 = list(node1.values_list('soil_moisture_20', flat=True))
+            context["c1"] = get_graph_data(soil_m_0, soil_m_10, soil_m_20, update_time)
+            
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+        
+        elif load_template == "node1analysis-ph.html":
+            node1 = HistoryUpdate.objects.filter(node_id=1)
+            update_time = list(node1.values_list('update_time', flat=True))
+            update_time = [str(y.month)+'-'+str(y.day)+' '+str(y.hour)+":00" for y in update_time]
+        
+            soil_ph_0 = list(node1.values_list('ph_0', flat=True))
+            soil_ph_10 = list(node1.values_list('ph_10', flat=True))
+            soil_ph_20 = list(node1.values_list('ph_20', flat=True))
+            context["c1"] = get_graph_data(soil_ph_0, soil_ph_10, soil_ph_20, update_time)
             
             html_template = loader.get_template('data_query/' + load_template)
             return HttpResponse(html_template.render(context, request))
 
+        elif load_template == "node1analysis-li.html":
+            node1 = HistoryUpdate.objects.filter(node_id=1)
+            update_time = list(node1.values_list('update_time', flat=True))
+            update_time = [str(y.month)+'-'+str(y.day)+' '+str(y.hour)+":00" for y in update_time]
+        
+            li = list(node1.values_list('light_intensity_0', flat=True))
+            context["c1"] = get_graph_data(li, [], [], update_time)
+            
+            html_template = loader.get_template('data_query/' + load_template)
+            return HttpResponse(html_template.render(context, request))
+
+        elif load_template == "chatbot.html":
+            if request.method == 'POST':
+                try:
+                    user_input = request.POST.get('userInput')
+                    clean_user_input = str(user_input).strip()
+                    print(clean_user_input)
+                    response = client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": "Say this is a test",
+                            }
+                        ],
+                        model="gpt-3.5-turbo",
+                    )
+                    response = response.choices[0].text.strip()
+                    print(response)
+
+                    obj, created = ChatGptBot.objects.get_or_create(
+                        user=request.user,
+                        messageInput=clean_user_input,
+                        bot_response=response,
+                    )
+                    return redirect(request.META['HTTP_REFERER'])
+                
+                except Exception as e:
+                    # Log the error
+                    print(f"Error with OpenAI API: {e}")
+                    # Handle the error, maybe set a default response or return an error message
+                    response = "I'm sorry, I can't respond to that right now."
+            else:
+                get_history = ChatGptBot.objects.filter(user=request.user)
+                context = {'get_history':get_history}
+                html_template = loader.get_template('home/' + load_template)
+                return HttpResponse(html_template.render(context, request))
+            
+
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))
             
+
+       
 
     except template.TemplateDoesNotExist:
         html_template = loader.get_template('home/page-404.html')

@@ -145,6 +145,7 @@
                 <canvas id="chart-dark" class="chart-canvas"></canvas>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
                 <script>
                   var ctx = $('#chart-dark').get(0).getContext('2d');
                   var myChart = new Chart(ctx, {
@@ -196,7 +197,7 @@
                                   },
                                   title: {
                                       display: true,
-                                      text: 'Temperature [°C]',
+                                      text: 'pH Value',
                                       color: 'rgb(255, 255, 255)' // Optional: Set the y-axis title color
                                   }
                                 }
@@ -206,8 +207,44 @@
                                     labels: {
                                         color: 'rgb(255, 255, 255)' // Legend text color
                                     }
+                                },
+                                annotation: {
+                                    annotations: {
+                                        line1: { // Annotation id
+                                            type: 'line',
+                                            mode: 'horizontal',
+                                            scaleID: 'y', // Make sure this is the ID of your Y axis
+                                            value: 5, // Data value to draw the line at
+                                            borderColor: 'rgb(89, 165, 44)', // Color of the line
+                                            borderWidth: 2, // Thickness of the line
+                                            borderDash: [10, 5], // Creates a dotted line pattern
+                                            label: {
+                                                enabled: true, // Set to true to show label next to the line
+                                                content: 'Lower Bound', // The content of the label
+                                                position: 'start', // Position label at the start of the line (left)
+                                                color: '#fff', // Optional: Text color
+                                                backgroundColor: 'rgba(0,0,0,0.3)'
+                                            }
+                                        },
+                                        line2: { // Annotation id
+                                            type: 'line',
+                                            mode: 'horizontal',
+                                            scaleID: 'y', // Make sure this is the ID of your Y axis
+                                            value: 6.2, // Data value to draw the line at
+                                            borderColor: 'rgb(89, 165, 44)', // Color of the line
+                                            borderWidth: 2, // Thickness of the line
+                                            borderDash: [10, 5], // Creates a dotted line pattern
+                                            label: {
+                                                enabled: true, // Set to true to show label next to the line
+                                                content: 'Upper Bound', // The content of the label
+                                                position: 'start', // Position label at the start of the line (left)
+                                                color: '#fff', // Optional: Text color
+                                                backgroundColor: 'rgba(0,0,0,0.3)'
+                                            }
+                                        }
+                                    }
                                 }
-                            }
+                              }
                           }
                     });
                 </script>            
