@@ -123,7 +123,8 @@ typedef struct command_format{
 void loop() {
   noInterrupts();
 
-  command_format current_data
+  command_format current_data;
+
 
   moist_value = analogRead(A0);
   current_packet.data = moist_value; 
