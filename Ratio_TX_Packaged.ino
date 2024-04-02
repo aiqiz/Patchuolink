@@ -1,5 +1,3 @@
-// Ratio TX file but it reads moisture sensor data from serial. 
-
 enum ANALOG{
   OFF =        1*255/6, 
   LOW_DOWN =   2*255/6, 
@@ -120,14 +118,22 @@ typedef struct command_format{
   uint8_t end_of_packet;  // 4 bits
 } command_format;
 
+//KEVIN TODO: 
+
+int create_command(command_format *cmd, int value, int control){
+
+}
+
 void loop() {
   noInterrupts();
 
-  command_format current_data;
-
-
-  moist_value = analogRead(A0);
+  uint32_t moist_value = analogRead(A0);
   current_packet.data = moist_value; 
+  uint8_t err = (-1)*moist_value;
+
+  //ISSUES: error check is only 8 bits, not large enough to store -moist_value
+
+  command_format current_data(1101, 00000100, 00000001, moist_value, err, 1011);
 
   uint32_t tx_buf = tx_buffer;
   uint64_t data_packet = struct_to_packet(current_data); 
