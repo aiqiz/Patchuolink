@@ -1,0 +1,181 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Data Analysis</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="dashboard.html"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="node1analysis-temp.html">Node 1</a></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+            <a href="node1analysis-temp.html" class="btn btn-sm btn-neutral">Node 1 Analysis</a>
+            <a href="node1analysis-temp.html" class="btn btn-sm btn-neutral">Node 2 Analysis</a>
+            <a href="node1analysis-temp.html" class="btn btn-sm btn-neutral">Node 3 Analysis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header border-0">
+            <h3 class="mb-0">Node 1 Temperature</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-light">
+              <canvas id="chart-dark" class="chart-canvas"></canvas>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+              <script>
+                var ctx = $('#chart-dark').get(0).getContext('2d');
+                var myChart = new Chart(ctx, {
+                      type: 'line',
+                      
+                      data: {
+                        labels: JSON.parse('{{ c1 | safe }}').labels,
+                        datasets: [{
+                            label: 'ground',
+                            data: JSON.parse('{{ c1 | safe }}').value1,
+                            borderColor: 'rgb(17, 205, 239)',
+                            tension: 0.3
+                        },
+                        {
+                            label: '-10cm',
+                            data: JSON.parse('{{ c1 | safe }}').value2,
+                            borderColor: 'rgb(243, 164, 181)',
+                            tension: 0.3
+                        },
+                        {
+                            label: '-20cm',
+                            data: JSON.parse('{{ c1 | safe }}').value3,
+                            borderColor: 'rgb(251, 99, 64)',
+                            tension: 0.3
+                        }]},
+                        options: {
+                        scales: {
+                            x: {
+                                gridLines: {
+                                    color: 'rgba(0, 0, 0, 0.7)', // White with some transparency
+                                    zeroLineColor: 'rgba(0, 0, 0, 1)' // White for the zero line
+                                },
+                                ticks: {
+                                    color: 'rgb(0, 0, 0)' // Set the x-axis label text color
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Date-Time',
+                                    color: 'rgb(0, 0, 0)' // Optional: Set the x-axis title color
+                                }
+                            },
+                            y: {
+                                gridLines: {
+                                    color: 'rgba(0, 0, 0, 0.7)', // White with some transparency
+                                    zeroLineColor: 'rgba(0, 0, 0, 1)' // White for the zero line
+                                },
+                                ticks: {
+                                    color: 'rgb(0, 0, 0)' // Set the y-axis label text color
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Temperature [°C]',
+                                    color: 'rgb(0, 0, 0)' // Optional: Set the y-axis title color
+                                }
+                              }
+                            },
+                            plugins: {
+                              legend: {
+                                  labels: {
+                                      color: 'rgb(0, 0, 0)' // Legend text color
+                                  }
+                              },
+                              annotation: {
+                                  annotations: {
+                                      line1: { // Annotation id
+                                          type: 'line',
+                                          mode: 'horizontal',
+                                          scaleID: 'y', // Make sure this is the ID of your Y axis
+                                          value: 22, // Data value to draw the line at
+                                          borderColor: 'rgb(89, 165, 44)', // Color of the line
+                                          borderWidth: 2, // Thickness of the line
+                                          borderDash: [10, 5], // Creates a dotted line pattern
+                                          label: {
+                                              enabled: true, // Set to true to show label next to the line
+                                              content: 'Lower Bound', // The content of the label
+                                              position: 'start', // Position label at the start of the line (left)
+                                              color: '#fff', // Optional: Text color
+                                              backgroundColor: 'rgba(0,0,0,0.3)'
+                                          }
+                                      },
+                                      line2: { // Annotation id
+                                          type: 'line',
+                                          mode: 'horizontal',
+                                          scaleID: 'y', // Make sure this is the ID of your Y axis
+                                          value: 28, // Data value to draw the line at
+                                          borderColor: 'rgb(89, 165, 44)', // Color of the line
+                                          borderWidth: 2, // Thickness of the line
+                                          borderDash: [10, 5], // Creates a dotted line pattern
+                                          label: {
+                                              enabled: true, // Set to true to show label next to the line
+                                              content: 'Upper Bound', // The content of the label
+                                              position: 'start', // Position label at the start of the line (left)
+                                              color: '#fff', // Optional: Text color
+                                              backgroundColor: 'rgba(0,0,0,0.3)'
+                                          }
+                                      }
+                                  },
+                              }
+                            }
+                        }
+                  });
+              </script>            
+            </div>
+          </div>
+          <!-- Card footer -->
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                
+                <li class="page-item active">
+                  <a class="page-link" href="node1analysis-temp.html">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="node1analysis-m.html">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="node1analysis-ph.html">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="node1analysis-li.html">4</a>
+                </li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include "includes/footer.html" %}
+
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

@@ -125,7 +125,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-light text-uppercase ls-1 mb-1">Overview Among All Nodes</h6>
-                  <h5 class="h3 text-white mb-0">Average Temperature</h5>
+                  <h5 class="h3 text-white mb-0">Average pH</h5>
                 </div>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
@@ -197,7 +197,7 @@
                                   },
                                   title: {
                                       display: true,
-                                      text: 'Temperature [°C]',
+                                      text: 'pH Value',
                                       color: 'rgb(255, 255, 255)' // Optional: Set the y-axis title color
                                   }
                                 }
@@ -214,7 +214,7 @@
                                             type: 'line',
                                             mode: 'horizontal',
                                             scaleID: 'y', // Make sure this is the ID of your Y axis
-                                            value: 22, // Data value to draw the line at
+                                            value: 5, // Data value to draw the line at
                                             borderColor: 'rgb(89, 165, 44)', // Color of the line
                                             borderWidth: 2, // Thickness of the line
                                             borderDash: [10, 5], // Creates a dotted line pattern
@@ -230,7 +230,7 @@
                                             type: 'line',
                                             mode: 'horizontal',
                                             scaleID: 'y', // Make sure this is the ID of your Y axis
-                                            value: 28, // Data value to draw the line at
+                                            value: 6.2, // Data value to draw the line at
                                             borderColor: 'rgb(89, 165, 44)', // Color of the line
                                             borderWidth: 2, // Thickness of the line
                                             borderDash: [10, 5], // Creates a dotted line pattern
@@ -242,7 +242,7 @@
                                                 backgroundColor: 'rgba(0,0,0,0.3)'
                                             }
                                         }
-                                    },
+                                    }
                                 }
                               }
                           }
@@ -255,8 +255,7 @@
         <div class="col-xl-4">
           <div class="card">
             <div class="card-body">
-              <iframe src="
-              https://www.google.com/maps/d/u/0/embed?mid=1uVJ-V4pOWXZG3gTVn6ngo70lTV-s2yg&ehbc=2E312F" width="335" height="430"></iframe>
+              <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1uVJ-V4pOWXZG3gTVn6ngo70lTV-s2yg&ehbc=2E312F" width="335" height="430"></iframe>
             </div>
           </div>
         </div>
