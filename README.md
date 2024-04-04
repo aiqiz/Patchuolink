@@ -43,8 +43,7 @@ Use the `BLANK_README.md` to get started.
   |    |    |-- hubdemo.sql                     # creating the database
   |    |    |    |-- home_chatgptbot            # record the conversation with openai api chatbot
   |    |    |    |-- history_update             # record the update history for each round for all the nodes
-  |    |    |    |-- node_info                  # record the node related information, like geographical location and last update time...
-  |    |    |
+  |    |    |    |-- node_info                  # record the node related information, like geographical 
   |    |    |-- loading_ver3.py                 # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
   |    |
   |    |-- core/                                # control the website in a whole serve as the high level controller
@@ -78,14 +77,24 @@ Use the `BLANK_README.md` to get started.
   |    |    |   |   |-- node1analysis-m.html    # node one data analysis moisture graph
   |    |    |   |   |-- node1analysis-ph.html   # node one data analysis ph graph
   |    |    |   |   |-- node1analysis-temp.html # node one data analysis temperature graph
+  |    |    |   |
   |    |    |   |-- home/
-  |    |    |   |   |-- node1analysis-temp.html # node one data analysis temperature graph
+  |    |    |   |   |-- chatbot.html            # the chatbot page that supports instant communication
+  |    |    |   |   |-- dashboard.html          # dashboard page contain all general performance
+  |    |    |   |   |-- dashboardli.html        # dashboard page with light intensity graph
+  |    |    |   |   |-- dashboardmoisture.html  # dashboard page with moisture graph
+  |    |    |   |   |-- dashboardph.html        # dashboard page with ph graph
+  |    |    |   |   |-- map.html                # map page showing the geographical position of each node
+  |    |    |   |   |-- rawdata.html            # raw datapage that can link to different raw data
+  |    |    |   |   |-- page-403.html           # if connection issue for 403 error page, default template setting
+  |    |    |   |   |-- page-404.html           # if template loading issue for 404 error page, default template setting
+  |    |    |   |   |-- page-500.html           # if other issue for 500 error page, default template setting
+  |    |    |   |
   |    |    |   |-- includes/
+  |    |    |   |   |-- sidenav.html            # sidebar structure and configuration there
+  |    |    |   |
   |    |    |   |-- layout/
-  |
-  |
-  |
-  |
+  |    |    |   |   |-- base.html               # base structure of each page, default template
   |
 ```
 
