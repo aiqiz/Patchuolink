@@ -7,33 +7,6 @@
 </div>
 
 
-<details>
-  <summary> ## Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <br />
@@ -54,44 +27,68 @@ Of course, no one template will serve all projects since your needs may be diffe
 Use the `BLANK_README.md` to get started.
 
 
-
-
-### Built With
 ## Node
 
 ## Hub
+
+
+## Built With
+
+## Code-base structure
 ```bash
 < PROJECT ROOT >
   |-- hub/
-  |    |-- hub visualizer/                     # website interface final screenshots
-  |    |-- mysql_database/                     # integration and database file
-  |    |    |-- hubdemo.sql                    # creating the database
-  |    |    |    |-- home_chatgptbot           # record the conversation with openai api chatbot
-  |    |    |    |-- history_update            # record the update history for each round for all the nodes
-  |    |    |    |-- node_info                 # record the node related information, like geographical location and last update time...
+  |    |-- hub visualizer/                      # website interface final screenshots
+  |    |-- mysql_database/                      # integration and database file
+  |    |    |-- hubdemo.sql                     # creating the database
+  |    |    |    |-- home_chatgptbot            # record the conversation with openai api chatbot
+  |    |    |    |-- history_update             # record the update history for each round for all the nodes
+  |    |    |    |-- node_info                  # record the node related information, like geographical location and last update time...
   |    |    |
-  |    |    |-- loading_ver3.py                # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
+  |    |    |-- loading_ver3.py                 # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
   |    |
-  |    |-- core/
-  |    |    |-- settings.py                    # contain all settings to connect with local database and basic settings for django webframe
-  |    |    |-- urls.py                        # Define URLs served by all apps/nodes
+  |    |-- core/                                # control the website in a whole serve as the high level controller
+  |    |    |-- settings.py                     # contain all settings to connect with local database and basic settings for django webframe
+  |    |    |-- urls.py                         # Define URLs served by all apps/nodes
   |    |
-  |    |-- apps/
-  |    |    |-- authentication/                # template and django default admin and authentication page
+  |    |-- apps/                                # control all the functions embedded in the website
+  |    |    |-- authentication/                 # control the function of for authentication, template default
   |    |    |
   |    |    |-- home/
-  |    |    |   |
-  |    |    |
-  |    |    |
+  |    |    |   |-- models.py                   # contain all the data format converting from SQL database directly
+  |    |    |   |-- urls.py                     # directly links for loading into different html template
+  |    |    |   |-- views.py                    # the controller of all core pages, sending request, data query information, connecting with external api, and pagkage all information to each html template
+  |    |    | 
   |    |    |-- static/
+  |    |    |   |-- assets/
+  |    |    |   |   |-- css/                    # contains all configurations for each page (shape, color, size...)
+  |    |    |   |   |-- fonts/                  # special fonts information
+  |    |    |   |   |-- js/                     # javascript static files
+  |    |    |   |   |-- img/                    # image static files
+  |    |    |   |   |
   |    |    |-- templates/
-  |    |
+  |    |    |   |-- accounts/                   # the login and register page, default setting by the template
+  |    |    |   |-- data_query/
+  |    |    |   |   |-- each_update_full.html   # update_history raw data page
+  |    |    |   |   |-- node_1.html             # information table specifically with node one
+  |    |    |   |   |-- node_2.html             # information table specifically with node two
+  |    |    |   |   |-- node_3.html             # information table specifically with node three
+  |    |    |   |   |-- node_information.html   # node_information raw data page
+  |    |    |   |   |-- node1analysis-li.html   # node one data analysis light intensity graph
+  |    |    |   |   |-- node1analysis-m.html    # node one data analysis moisture graph
+  |    |    |   |   |-- node1analysis-ph.html   # node one data analysis ph graph
+  |    |    |   |   |-- node1analysis-temp.html # node one data analysis temperature graph
+  |    |    |   |-- home/
+  |    |    |   |   |-- node1analysis-temp.html # node one data analysis temperature graph
+  |    |    |   |-- includes/
+  |    |    |   |-- layout/
   |
   |
   |
   |
   |
 ```
+
 ## Original Design Document
 
 
