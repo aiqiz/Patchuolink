@@ -14,7 +14,7 @@ import json
 import os
 import openai
 
-openai.api_key = "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"
+openai.api_key = ""
 
 def get_graph_data(val_list_x1, val_list_x2, val_list_x3, val_list_y):
     dic = json.dumps({
