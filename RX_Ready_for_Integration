@@ -56,8 +56,8 @@ void print_bin(uint64_t bin) {
 #define DEBUG_PRINT 0
 
 
-typedef struct command_format{
-  uint8_t start_of_packet; // 4 bits
+typedef struct command_format {
+  uint8_t start_of_packet;  // 4 bits
   uint8_t source;
   uint8_t control;
   uint32_t data;
@@ -96,8 +96,8 @@ uint64_t async_input_buffer;
 volatile bool digital_read = 0;
 
 uint8_t model_arduino() {
-  if( i == 100){
-    Serial.println("restart");
+  if (i == 100) {
+    //Serial.println("restart");
     i = 0;
     buffer = RECEIVE_PACKET;
   }
@@ -121,75 +121,94 @@ void packet_to_struct(uint64_t packet) {
   s_to_mySQL.start_of_packet = packet & 0x000000000000000F;
 }
 
-void send_to_serial(){
-    Serial.print("Data: ");
-    Serial.println(s_to_mySQL.data);
+void send_to_serial() {
+  Serial.print("Data: ");
+  Serial.println(s_to_mySQL.data);
 }
 
 // reads the data from the pin, and stores a) the channels b) the buffer
 void RX_Handler() {
   static int prev_val = 0;
-  //val = digitalRead(RX_PIN);
+  val = digitalRead(RX_PIN);
   ratio_ready = true;
 
+  if (val != prev_val) {
+    if (!prev_val) {
+      ratio = ones * 100 / (ones + zeros);
+      update_ones = ones;
+      update_zeros = zeros;
 
-//   if (val != prev_val) {
-//     if (!prev_val) {
-//       ratio = ones * 100 / (ones + zeros);
-//       update_ones = ones;
-//       update_zeros = zeros;
+      ones = 0;
+      zeros = 1;
+      ratio_ready = true;
 
-//       ones = 0;
-//       zeros = 1;
-//       ratio_ready = true;
+      int digital_inter = ratio_to_bool(ratio);
 
-//       int digital_inter = ratio_to_bool(ratio);
+      switch (digital_inter) {
+        case LOW_DOWN: digital_read = false; break;
+        case LOW_UP: digital_read = false; break;
+        case HIGH_DOWN: digital_read = true; break;
+        case HIGH_UP: digital_read = true; break;
+      }
 
+      digital_read = ratio > 40;
 
-//       switch (digital_inter) {
-//         case LOW_DOWN: digital_read = false; break;
-//         case LOW_UP: digital_read = false; break;
-//         case HIGH_DOWN: digital_read = true; break;
-//         case HIGH_UP: digital_read = true; break;
-//       }
-
-//       if (reading == 1) {
-//         if (digital_inter != prev_digital) {
-//           input_buffer <<= 1;
-//           input_buffer |= digital_read;
-//           prev_digital = digital_inter;
-//         }
-//       }
-//     }
-//   }
+      if (reading == 1) {
+        if (digital_inter != prev_digital) {
+          input_buffer <<= 1;
+          input_buffer |= digital_read;
+          prev_digital = digital_inter;
+        }
+      }
+    }
+  }
 
 
-// // for ratio calculations
-//   if (val) {
-//     ones++;
-//   } else {
-//     zeros++;
-//   }
-//   prev_val = val;
+  // for ratio calculations
+  if (val) {
+    ones++;
+  } else {
+    zeros++;
+  }
+  prev_val = val;
 
-  digital_read = model_arduino();
+  // digital_read = model_arduino();
+
+  // when 1101 is read while in the waiting mode, turn to reading mode and save the start packet indicator to raw_data
+  if (reading == 0) {
+    if (check_start == 1 && digital_read == 1) {
+      check_start = 2;
+    } else if (check_start == 2 && digital_read == 1) {
+      check_start = 3;
+    } else if (check_start == 3 && digital_read == 0) {
+      check_start = 4;
+    } else if (check_start == 4 && digital_read == 1) {
+      reading = 1;
+      check_start = 1;
+      input_buffer = 0x000000000000000D;
+      //Serial.print("Start_packet: ");
+      //print_bin(input_buffer);
+      input_buffer_i = 4;
+    } else {
+      check_start = 1;
+    }
+  }
 
   if (reading == 1) {
     input_buffer <<= 1;
     input_buffer |= digital_read;
     input_buffer_i++;
-    if (input_buffer_i == 64){
+    if (input_buffer_i == 64) {
       input_buffer_i == 0;
       reading = 0;
-      Serial.print("\nFinal packet");
+      Serial.print("\nFinal packet: ");
       print_bin(input_buffer);
       packet_to_struct(input_buffer);
       Serial.print("Data: ");
-      print_bin(s_to_mySQL.data);      
+      print_bin(s_to_mySQL.data);
       send_to_serial();
     }
   }
-
 }
 
 void setup() {
@@ -219,24 +238,6 @@ void setup() {
 
 
 
-// uint64_t struct_to_packet(command_format s) {
-//   uint64_t packet;
-//   packet |= s.start_of_packet;
-//   packet <<= 4;
-//   packet |= s.source;
-//   packet <<= 8;
-//   packet |= s.control;
-//   packet <<= 8;
-//   packet |= s.data;
-//   packet <<= 32;
-//   packet |= s.error_check;
-//   packet <<= 8;
-//   packet |= s.end_of_packet;
-//   packet <<= 4;
-//   return packet;
-// }
-
-
 
 void loop() {
 
@@ -244,27 +245,13 @@ void loop() {
   if (ratio_ready) {
     //int ratio_cpy = ratio;
     ratio_ready = false;
-    Serial.print(digital_read);
-    // when 1101 is read while in the waiting mode, turn to reading mode and save the start packet indicator to raw_data
-    if (reading == 0) {
-      if (check_start == 1 && digital_read == 1) {
-        check_start = 2;
-      } else if (check_start == 2 && digital_read == 1) {
-        check_start = 3;
-      } else if (check_start == 3 && digital_read == 0) {
-        check_start = 4;
-      } else if (check_start == 4 && digital_read == 1) {
-        reading = 1;
-        check_start = 1;
-        input_buffer = 0x000000000000000D;
-        Serial.print("Start_packet: ");
-        print_bin(input_buffer);
-        input_buffer_i = 4;
-      } else {
-        check_start = 1;
-      }
+    // print_bin(input_buffer);
+    Serial.print("0,100,");
+    Serial.println(ratio);
 
-    }
+
+    // Serial.print(digital_read);
+
     interrupts();
 
 
