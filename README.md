@@ -1,6 +1,4 @@
 # Patchuolink
-Praxis 3 project
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -38,8 +36,11 @@ Praxis 3 project
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<br />
+<div align="center">
+    <img src="hub/hub visualizer/website_dashboard_1.png" alt="Logo" width="437" height="322">
+  </a>
+</div>
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
