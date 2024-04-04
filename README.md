@@ -99,12 +99,11 @@ Use the `BLANK_README.md` to get started.
 ```
 
 ## Original Design Document
-
-
-
+Design Dossier 1.0: [https://thunder-croissant-5df.notion.site/Praxis-III-04c66cfbf70f4f8fb3bc3ce591197d76][https://thunder-croissant-5df.notion.site/Praxis-III-04c66cfbf70f4f8fb3bc3ce591197d76]
+Design Dossier 2.0: [https://drive.google.com/drive/folders/18xV06bwRk_xcrWZuJ-arpAHzBY_tWKWn?usp=sharing](https://drive.google.com/drive/folders/18xV06bwRk_xcrWZuJ-arpAHzBY_tWKWn?usp=sharing)
 
 ## Contact
-
+Contact with the team: [https://thunder-croissant-5df.notion.site/Team-Identity-66c85381681543b98f773d2f37996de5](https://thunder-croissant-5df.notion.site/Team-Identity-66c85381681543b98f773d2f37996de5)
 
 ## Acknowledgments
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
