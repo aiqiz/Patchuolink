@@ -95,6 +95,8 @@ uint64_t async_input_buffer;
 
 volatile bool digital_read = 0;
 
+uint64_t check_packet;
+
 uint8_t model_arduino() {
   if( i == 100){
     Serial.println("restart");
@@ -174,21 +176,18 @@ void RX_Handler() {
 
   //digital_read = model_arduino();
   digital_read = digitalRead(RX_PIN);
+  input_buffer <<= 1;
+  input_buffer |= digital_read;
+  input_buffer_i++;
 
-  if (reading == 1) {
-    input_buffer <<= 1;
-    input_buffer |= digital_read;
-    input_buffer_i++;
-    if (input_buffer_i == 64){
-      input_buffer_i == 0;
-      reading = 0;
-      Serial.print("\nFinal packet");
-      print_bin(input_buffer);
-      packet_to_struct(input_buffer);
-      Serial.print("Data: ");
-      print_bin(s_to_mySQL.data);      
-      send_to_serial();
-    }
+  check_packet = (input_buffer & 0xF00000000000000F) ^ 0xD00000000000000B;
+  if (!check_packet){
+    Serial.print("\nFinal packet: ");
+    print_bin(input_buffer); 
+    packet_to_struct(input_buffer);
+    //Serial.print("Data: ");
+    //print_bin(s_to_mySQL.data);      
+    send_to_serial();   
   }
 
 }
@@ -247,25 +246,7 @@ void loop() {
     ratio_ready = false;
     Serial.print(digital_read);
     // when 1101 is read while in the waiting mode, turn to reading mode and save the start packet indicator to raw_data
-    if (reading == 0) {
-      if (check_start == 1 && digital_read == 1) {
-        check_start = 2;
-      } else if (check_start == 2 && digital_read == 1) {
-        check_start = 3;
-      } else if (check_start == 3 && digital_read == 0) {
-        check_start = 4;
-      } else if (check_start == 4 && digital_read == 1) {
-        reading = 1;
-        check_start = 1;
-        input_buffer = 0x000000000000000D;
-        Serial.print("\nStart_packet: ");
-        print_bin(input_buffer);
-        input_buffer_i = 4;
-      } else {
-        check_start = 1;
-      }
-
-    }
+    
     interrupts();
 
 
@@ -276,20 +257,6 @@ void loop() {
     // }
 
 
-#if (DEBUG_PRINT)
-    Serial.print("Ratio_Raw:");
-    Serial.print(ratio_cpy);
-    Serial.print(",");
-    Serial.print("Ratio_Digital:");
-    Serial.print(ratio_to_bool(ratio_cpy) * 60 / 255);
-
-    // if(!(loop_counter & 0x00000001F)){ //32: 1F, 64: 3F
-    //   Serial.print(",");
-    //   Serial.print("input_buffer:");
-    //   print_bin(input_buffer);
-    // }
-    Serial.println();
-#endif
   }
   interrupts();
   //loop_counter++;
