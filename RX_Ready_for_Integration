@@ -124,7 +124,7 @@ void packet_to_struct(uint64_t packet) {
 }
 
 void send_to_serial(){
-    Serial.print("Data: ");
+    //Serial.print("Data: ");
     Serial.println(s_to_mySQL.data);
 }
 
@@ -182,8 +182,8 @@ void RX_Handler() {
 
   check_packet = (input_buffer & 0xF00000000000000F) ^ 0xD00000000000000B;
   if (!check_packet){
-    Serial.print("\nFinal packet: ");
-    print_bin(input_buffer); 
+    //Serial.print("\nFinal packet: ");
+    //print_bin(input_buffer); 
     packet_to_struct(input_buffer);
     //Serial.print("Data: ");
     //print_bin(s_to_mySQL.data);      
@@ -244,7 +244,7 @@ void loop() {
   if (ratio_ready) {
     //int ratio_cpy = ratio;
     ratio_ready = false;
-    Serial.print(digital_read);
+    //Serial.print(digital_read);
     // when 1101 is read while in the waiting mode, turn to reading mode and save the start packet indicator to raw_data
     
     interrupts();
