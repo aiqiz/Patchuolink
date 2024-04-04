@@ -62,16 +62,30 @@ Use the `BLANK_README.md` to get started.
 ## Hub
 ```bash
 < PROJECT ROOT >
-  |
-  |
-  |-- mysql_database/                     # integration and database file
-  |    |-- hubdemo.sql                    # creating the database
-  |    |    |-- home_chatgptbot           # record the conversation with openai api chatbot
-  |    |    |-- history_update            # record the update history for each round for all the nodes
-  |    |    |-- node_info                 # record the node related information, like geographical location and last update time...
-  |    |-- loading_ver3.py                # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
-  |    |-- urls.py                        #
-  |    |-- 
+  |-- hub/
+  |    |-- hub visualizer/                     # website interface final screenshots
+  |    |-- mysql_database/                     # integration and database file
+  |    |    |-- hubdemo.sql                    # creating the database
+  |    |    |    |-- home_chatgptbot           # record the conversation with openai api chatbot
+  |    |    |    |-- history_update            # record the update history for each round for all the nodes
+  |    |    |    |-- node_info                 # record the node related information, like geographical location and last update time...
+  |    |    |
+  |    |    |-- loading_ver3.py                # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
+  |    |
+  |    |-- core/
+  |    |    |-- settings.py                    # contain all settings to connect with local database and basic settings for django webframe
+  |    |    |-- urls.py                        # Define URLs served by all apps/nodes
+  |    |
+  |    |-- apps/
+  |    |    |-- authentication/                # template and django default admin and authentication page
+  |    |    |
+  |    |    |-- home/
+  |    |    |   |
+  |    |    |
+  |    |    |
+  |    |    |-- static/
+  |    |    |-- templates/
+  |    |
   |
   |
   |
