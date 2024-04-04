@@ -38,7 +38,7 @@
 ## About The Project
 <br />
 <div align="center">
-    <img src="hub/hub visualizer/website_dashboard_1.png" alt="Logo" width="437" height="322">
+    <img src="hub/hub visualizer/website_dashboard_1.png" alt="Logo" width="756" height="473">
   </a>
 </div>
 
