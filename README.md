@@ -53,7 +53,6 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 Use the `BLANK_README.md` to get started.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -61,6 +60,7 @@ Use the `BLANK_README.md` to get started.
 ## Node
 
 ## Hub
+```bash
 < PROJECT ROOT >
   |
   |
@@ -69,10 +69,15 @@ Use the `BLANK_README.md` to get started.
   |    |    |-- home_chatgptbot           # record the conversation with openai api chatbot
   |    |    |-- history_update            # record the update history for each round for all the nodes
   |    |    |-- node_info                 # record the node related information, like geographical location and last update time...
-  |    |-- loading_ver3.py                # 
+  |    |-- loading_ver3.py                # convert the serial monitor data in arduino to SQL database, with simple cleaning and query within
   |    |-- urls.py                        #
-
-
+  |    |-- 
+  |
+  |
+  |
+  |
+  |
+```
 ## Original Design Document
 
 
