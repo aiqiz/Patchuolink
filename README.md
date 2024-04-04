@@ -8,7 +8,7 @@
 
 
 <details>
-  <summary>Table of Contents</summary>
+  <summary> ## Table of Contents</summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -54,3 +54,34 @@ Of course, no one template will serve all projects since your needs may be diffe
 Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+## Node
+
+## Hub
+< PROJECT ROOT >
+  |
+  |
+  |-- mysql_database/                     # integration and database file
+  |    |-- hubdemo.sql                    # creating the database
+  |    |    |-- home_chatgptbot           # record the conversation with openai api chatbot
+  |    |    |-- history_update            # record the update history for each round for all the nodes
+  |    |    |-- node_info                 # record the node related information, like geographical location and last update time...
+  |    |-- loading_ver3.py                # 
+  |    |-- urls.py                        #
+
+
+## Original Design Document
+
+
+
+
+## Contact
+
+
+## Acknowledgments
+Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+
+
