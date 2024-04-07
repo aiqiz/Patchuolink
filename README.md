@@ -16,10 +16,11 @@
 </div>
 
 To sustainably enhance patchouli oil production and farmer revenue in Indonesia, we introduce Patchoulink—an advanced IoT system for real-time cultivation monitoring. Our prototype focuses on data flow through wireless communication, data management, storage, and analysis, with a user-friendly website interface.
-Utilizing wireless communication, nodes in the field transmit data in real time. The data journey begins with capturing analog signals from the sensor, packaging the data with communication protocols, and converting it into digital signals for transmission.
-Once received, the data is decoded and stored in a structured backend database, which records node configurations,  
-The heart of Patchoulink lies in its ability to analyze and present this data in a website interface. Here, farmers gain actionable insights, visualized with clarity and precision. Defined thresholds alert users to optimal growing conditions, ensuring informed decision-making.
-Further enhancing usability, Patchoulink features an OpenAI chatbot for immediate support, simplifying the translation of complex data into actionable farming strategies.
+
+Utilizing wireless communication, nodes in the field transmit data in real time. The data journey begins with capturing analog signals from the sensor, packaging the data with communication protocols, and converting it into digital signals for transmission. Once received, the data is decoded and stored in a structured backend database, which records node configurations,  
+
+The heart of Patchoulink lies in its ability to analyze and present this data in a website interface. Here, farmers gain actionable insights, visualized with clarity and precision. Defined thresholds alert users to optimal growing conditions, ensuring informed decision-making. Further enhancing usability, Patchoulink features an OpenAI chatbot for immediate support, simplifying the translation of complex data into actionable farming strategies.
+
 Patchoulink is more than a technological advancement for Indonesian patchouli farming—it's a sustainable, intelligent revolution, empowering farmers with instant insights for informed decision-making.
 
 ## Getting Started
@@ -30,9 +31,11 @@ Node - Arduino Hardware
 
 Hub - Django Software
 1. set up virtual environment (in terminal)
+'''
 $ cd hub                              # go to the right directory
 $ virtualenv env                      # create virtual environment
 $ source env/bin/activate             # activate the virtual environment
+'''
 
 2. set up MySQL server
 
@@ -41,13 +44,16 @@ $ source env/bin/activate             # activate the virtual environment
 4. set up the connections with the database in core/settings.py
 
 5. create tables (in terminal)
+'''
 $ python manage.py makemigrations     # create table 
 $ python manage.py migrate            # migrate table
+'''
 
 6. run the server
+'''
 $ python manage.py runserver          # default port 8000
 $ # Access the web app in browser: http://127.0.0.1:8000/
-
+'''
 
 
 ## Built With
