@@ -57,7 +57,7 @@ $ # Access the web app in browser: http://127.0.0.1:8000/
 
 
 ## Built With
-** Node **
+1. Node
 * Arduino
 * RF module
 * GPS module
@@ -66,7 +66,7 @@ $ # Access the web app in browser: http://127.0.0.1:8000/
 * Arduino Library - timer
 * Arduino Library - interrput.h
 
-** Hub **
+2. Hub
 * Python Django
 * MySQL
 * html
