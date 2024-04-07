@@ -11,14 +11,17 @@ db = pymysql.connect(host="127.0.0.1", user="root", password="Angela040804!", db
 cursor = db.cursor()
 
 # Open the serial port
-ser = serial.Serial('/dev/cu.usbmodem1101', 2000000, timeout=1)
+ser = serial.Serial('/dev/cu.usbmodem1101', 9600, timeout=1)
 
 k = 1
 while True:
     
     try:
-        line = ser.readline().decode()
-        line = line.strip()
+        
+        line = ser.readline()
+        print(line)
+        line = line.strip().decode()
+        print(line)
         # Use a regular expression to match only lines with numeric data
         if re.match(r'^-?\d+$', line):
             if line:

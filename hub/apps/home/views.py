@@ -57,6 +57,7 @@ def blocks(latest, last_latest, namelist, roundto):
         ratio = None
     else:
         ratio = round(((avg-last_avg)/avg) * 100, roundto)
+    print(newmax, newmin, diff, ratio)
     return newmax, newmin, diff, ratio
 
 def chat_gpt(prompt):
