@@ -31,11 +31,11 @@ Node - Arduino Hardware
 
 Hub - Django Software
 1. set up virtual environment (in terminal)
-'''
+```
 $ cd hub                              # go to the right directory
 $ virtualenv env                      # create virtual environment
 $ source env/bin/activate             # activate the virtual environment
-'''
+```
 
 2. set up MySQL server
 
@@ -44,27 +44,35 @@ $ source env/bin/activate             # activate the virtual environment
 4. set up the connections with the database in core/settings.py
 
 5. create tables (in terminal)
-'''
+```
 $ python manage.py makemigrations     # create table 
 $ python manage.py migrate            # migrate table
-'''
+```
 
 6. run the server
-'''
+```
 $ python manage.py runserver          # default port 8000
 $ # Access the web app in browser: http://127.0.0.1:8000/
-'''
+```
 
 
 ## Built With
-# Node
-Arduino
-RF module
-GPS module
-capacitor
-C++
-timer
-interrput.h
+** Node **
+* Arduino
+* RF module
+* GPS module
+* capacitor
+* C++
+* Arduino Library - timer
+* Arduino Library - interrput.h
+
+** Hub **
+* Python Django
+* MySQL
+* html
+* css
+* Javascript
+* python
 
 
 ## Code-base structure
